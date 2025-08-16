@@ -26,6 +26,9 @@
 # Visual Studio cache directory
 .vs/
 
+# Custom Ignores
+.meta
+
 # Gradle cache directory
 .gradle/
 
