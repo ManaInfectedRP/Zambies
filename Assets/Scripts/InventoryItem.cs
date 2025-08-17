@@ -36,6 +36,8 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public bool isInsideQuickSlot;
     public bool isSelected;
 
+    [Header("Building")]
+    public bool isUseable;
 
     private void Start()
     {
@@ -114,11 +116,18 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 itemPendingConsumption = gameObject;
                 consumingFunction(healthEffect, caloriesEffect, hydrationEffect);
             }
-            
+
             if (isEquippable && isInsideQuickSlot == false && EquipSystem.instance.CheckIfFull() == false)
             {
                 EquipSystem.instance.AddToQuickSlots(gameObject);
                 isInsideQuickSlot = true;
+            }
+
+            if (isUseable)
+            {
+                ConstructionManager.instance.itemToBeDestroyed = gameObject;
+                gameObject.SetActive(false);
+                UseItem();
             }
         }
     }
@@ -137,6 +146,39 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
+    public void UseItem()
+    {
+        itemInfoUI.SetActive(false);
+
+        InventorySystem.instance.isOpen = false;
+        InventorySystem.instance.inventoryScreenUI.SetActive(false);
+
+        CraftingSystem.instance.isOpen = false;
+        CraftingSystem.instance.craftingScreenUI.SetActive(false);
+        CraftingSystem.instance.survivalScreenUI.SetActive(false);
+        CraftingSystem.instance.refineScreenUI.SetActive(false);
+        CraftingSystem.instance.constructionScreenUI.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        SelectionManager.instance.EnableSelection();
+        SelectionManager.instance.enabled = true;
+
+        switch (gameObject.name)
+        {
+            case "WoodFoundation(Clone)":
+                ConstructionManager.instance.ActivateConstructionPlacement("WoodFoundationModel");
+                break;  
+            case "WoodFoundation":
+                ConstructionManager.instance.ActivateConstructionPlacement("WoodFoundationModel");
+                break;
+
+            default:
+                break;
+        }
+    }
+
     private void consumingFunction(float healthEffect, float caloriesEffect, float hydrationEffect)
     {
         itemInfoUI.SetActive(false);
@@ -148,8 +190,6 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         hydrationEffectCalculation(hydrationEffect);
 
     }
-
-
     private static void healthEffectCalculation(float healthEffect)
     {
         // --- Health --- //

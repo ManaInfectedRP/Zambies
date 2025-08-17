@@ -63,7 +63,7 @@ public class InventorySystem : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I) && !isOpen)
+        if (Input.GetKeyDown(KeyCode.I) && !isOpen && !ConstructionManager.instance.inConstructionMode)
         {
             Debug.Log("{Inventory} is pressed");
             inventoryScreenUI.SetActive(true);

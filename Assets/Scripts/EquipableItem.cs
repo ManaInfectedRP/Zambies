@@ -6,6 +6,8 @@ public class EquipableItem : MonoBehaviour
 {
     private Animator animator;
 
+    bool swingWait;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -17,10 +19,21 @@ public class EquipableItem : MonoBehaviour
         // 0 Left Mouse
         // 1 Right Mouse
         // 2 Scroll Click
-        if (Input.GetMouseButtonDown(0) && !InventorySystem.instance.isOpen && !CraftingSystem.instance.isOpen && !SelectionManager.instance.handIsVisible)
+        if (
+            Input.GetMouseButtonDown(0) &&
+            !InventorySystem.instance.isOpen &&
+            !CraftingSystem.instance.isOpen &&
+            !SelectionManager.instance.handIsVisible &&
+            swingWait == false &&
+            !ConstructionManager.instance.inConstructionMode
+        )
         {
+            swingWait = true;
+
             StartCoroutine(PlaySwingSound());
             animator.SetTrigger("hit");
+
+            StartCoroutine(NewSwingDelay());
         }
     }
 
@@ -28,6 +41,12 @@ public class EquipableItem : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         SoundManager.instance.PlaySound(SoundManager.instance.toolSwingSound);
+    }
+
+    IEnumerator NewSwingDelay()
+    {
+        yield return new WaitForSeconds(1);
+        swingWait = false;
     }
 
     public void GetHit()
@@ -39,7 +58,7 @@ public class EquipableItem : MonoBehaviour
         {
             SoundManager.instance.PlaySound(SoundManager.instance.chopSound);
             selectedTree.GetComponent<ChoppableTree>().GetHit();
-            
+
         }
     }
 }
