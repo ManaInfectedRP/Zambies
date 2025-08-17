@@ -12,6 +12,8 @@ TagManager:
   - ghost
   - activeConstructable
   - placedFoundation
+  - wallGhost
+  - placedWall
   layers:
   - Default
   - TransparentFX

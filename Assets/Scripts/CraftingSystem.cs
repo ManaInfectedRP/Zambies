@@ -27,7 +27,7 @@ public class CraftingSystem : MonoBehaviour
     public Blueprint axeBlueprint = new Blueprint("Axe", 1, 2, "Stone", 3, "Stick", 2);
     public Blueprint plankBlueprint = new Blueprint("Plank", 2, 1, "Log", 1, "Stick", 0);
     public Blueprint woodFoundationBlueprint = new Blueprint("WoodFoundation", 1, 1, "Plank", 4, "Stick", 0);
-    public Blueprint woodWallBlueprint = new Blueprint("WoodenWall", 1, 1, "Plank", 2, "Stick", 0);
+    public Blueprint woodWallBlueprint = new Blueprint("WoodWall", 1, 1, "Plank", 2, "Stick", 0);
 
 
     public static CraftingSystem instance { get; set; }

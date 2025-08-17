@@ -23,7 +23,7 @@ public class GhostItem : MonoBehaviour
         fullTransparentnMat = ConstructionManager.instance.ghostFullTransparentMat;
         selectedMaterial = ConstructionManager.instance.ghostSelectedMat;
  
-        mRenderer.material = semiTransparentMat; //change to semi if in debug else full
+        mRenderer.material = fullTransparentnMat; //change to semi if in debug else full
         // We disable the solid box collider - while it is not yet placed
         // (unless we are in construction mode - see update method)
         solidCollider.enabled = false;
@@ -31,6 +31,11 @@ public class GhostItem : MonoBehaviour
  
     private void Update()
     {
+        if (ConstructionManager.instance.inConstructionMode)
+        {
+            Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), ConstructionManager.instance.player.GetComponent<Collider>());
+        }
+
         // We need the solid collider so the ray cast will detect it
         if (ConstructionManager.instance.inConstructionMode && isPlaced)
         {
@@ -43,13 +48,13 @@ public class GhostItem : MonoBehaviour
         }
  
         // Triggering the material
-        if(ConstructionManager.instance.selectedGhost == this.gameObject)
+        if(ConstructionManager.instance.selectedGhost == gameObject)
         {
             mRenderer.material = selectedMaterial;
         }
         else
         {
-            mRenderer.material = semiTransparentMat; //change to semi if in debug else full
+            mRenderer.material = fullTransparentnMat; //change to semi if in debug else full
         }
     }
 }
