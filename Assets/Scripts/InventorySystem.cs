@@ -92,6 +92,7 @@ public class InventorySystem : MonoBehaviour
 
     public void AddToInventory(string itemName)
     {
+        SoundManager.instance.PlaySound(SoundManager.instance.pickupItemSound);
 
         whatSlotToEquip = FindNextEmptySlot();
 
@@ -135,17 +136,17 @@ public class InventorySystem : MonoBehaviour
         return new GameObject();
     }
 
-    public bool CheckIfFull()
+    public bool CheckSlotsAvailable(int emptyNeeded)
     {
-        int counter = 0;
+        int emptySlot = 0;
         foreach (GameObject slot in slotList)
         {
-            if (slot.transform.childCount > 0)
+            if (slot.transform.childCount <= 0)
             {
-                counter += 1;
+                emptySlot += 1;
             }
         }
-        if (counter == 21)
+        if (emptySlot >= emptyNeeded)
         {
             return true;
         }
@@ -154,6 +155,11 @@ public class InventorySystem : MonoBehaviour
             return false;
         }
     }
+    /*  Inventory slots = 21,
+        21 - EmptyNeeded = Result,
+        emptyNeeded = 1,
+        21 - 1 = Result 20
+    */
 
     public void RemoveItem(string nameToRemove, int amountToRemove)
     {
@@ -170,7 +176,7 @@ public class InventorySystem : MonoBehaviour
                 }
             }
         }
-        
+
         RecalculateList();
         CraftingSystem.instance.RefreshNeededItems();
     }

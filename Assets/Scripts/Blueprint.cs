@@ -11,14 +11,18 @@ public class Blueprint
 
     public int numOfRequirements;
 
-    public Blueprint(string name, int reqNum, string r1, int r1Num, string r2, int r2Num)
+    public int numberOfItemsToProduce;
+
+    public Blueprint(string name, int producedItems, int amountOfItemsRequired, string requirement_1, int requirement_1_Amount, string requirement_2, int requirement_2_Amount)
     {
         itemName = name;
-        numOfRequirements = reqNum;
+        numOfRequirements = amountOfItemsRequired;
 
-        req1 = r1;
-        req2 = r2;
-        req1Amount = r1Num;
-        req2Amount = r2Num;
+        numberOfItemsToProduce = producedItems;
+
+        req1 = requirement_1;
+        req2 = requirement_2;
+        req1Amount = requirement_1_Amount;
+        req2Amount = requirement_2_Amount;
     }
 }
