@@ -1,4 +1,6 @@
 SaveInformation.png contains Unitys 3 different way of Saving DATA for future save system.
+Sounds saved as PlayerPrefs as Binerized Files.
+
 
 Youtube videos:
 Intro : https://www.youtube.com/watch?v=nDTYEfgFD_s
