@@ -263,7 +263,7 @@ public class SaveManager : MonoBehaviour
 
         for (int i = 0; i < jsonString.Length; i++)
         {
-            result += (char)(jsonString[i] ^ keyword[i & keyword.Length]);
+            result += (char)(jsonString[i] ^ keyword[i % keyword.Length]);
         }
 
         return result;
