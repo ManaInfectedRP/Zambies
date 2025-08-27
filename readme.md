@@ -6,6 +6,8 @@ string jsonPathProject;
 //--Json External/Real Save Path-- ( Change to this when making a build/release )
 string jsonPathPresistant;
 
+JSON Encryption/Decryption Key: 1234567 ( REMINDER TO CHANGE WHEN BUILDING/RELEASE )
+
 PlayerStats:
 float[] Array:
 [0] = Health

@@ -150,16 +150,18 @@ public class SaveManager : MonoBehaviour
     //general EndRegion
     #endregion
 
-    
+
     #region  || -- ToJson Section -- ||
     public void SaveGameDataToJsonFile(AllGameData gameData)
     {
         string json = JsonUtility.ToJson(gameData);
 
+        string encrypted = EncryptionDecryption(json);
+
         using (StreamWriter writer = new StreamWriter(jsonPathProject))
         {
-            writer.Write(json);
-            print("Game Saved to: "  + jsonPathProject);
+            writer.Write(encrypted);
+            print("Game Saved to: " + jsonPathProject);
         }
 
         //print("Game Saved to: "  /*+ path*/);
@@ -171,9 +173,11 @@ public class SaveManager : MonoBehaviour
         {
             string json = reader.ReadToEnd();
 
-            AllGameData data = JsonUtility.FromJson<AllGameData>(json);
-            
-            print("Game Loaded from: " +jsonPathProject);
+            string decrypted = EncryptionDecryption(json);
+
+            AllGameData data = JsonUtility.FromJson<AllGameData>(decrypted);
+
+            print("Game Loaded from: " + jsonPathProject);
             return data;
         }
 
@@ -251,4 +255,36 @@ public class SaveManager : MonoBehaviour
 
     #endregion
 
+    #region || -- Encryption Section -- ||
+    public string EncryptionDecryption(string jsonString)
+    {
+        string keyword = "1234567";
+        string result = "";
+
+        for (int i = 0; i < jsonString.Length; i++)
+        {
+            result += (char)(jsonString[i] ^ keyword[i & keyword.Length]);
+        }
+
+        return result;
+
+        /*
+            XOR ^ = "Is there a difference"
+
+            -- Encrypt --
+            Mike - 01101101 01101001 01101011 01100101
+            M -    01101101
+            Key -  00000001
+
+            Encrypted 01101100
+            
+            -- Decrypt --
+            Encrypted 01101100
+            Key -     00000001
+            =
+            M -       01101101
+        */
+    }
+
+    #endregion
 }
