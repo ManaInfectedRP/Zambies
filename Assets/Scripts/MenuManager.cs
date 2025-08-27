@@ -57,9 +57,15 @@ public class MenuManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
-            
+
             SelectionManager.instance.EnableSelection();
             SelectionManager.instance.GetComponent<SelectionManager>().enabled = true;
         }
+    }
+
+    // *Temporary Save*
+    public void TempSaveGame()
+    {
+        SaveManager.instance.SaveGame();
     }
 }
