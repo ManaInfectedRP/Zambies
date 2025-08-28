@@ -5,12 +5,15 @@ public class PlayerData
 {
     public float[] playerStats;
     public float[] playerPositionAndRotation;
-    //public string[] inventoryContent;
 
-    public PlayerData(float[] _playerStats, float[] _playerPositionAndRotation/*, string[] _inventoryContent*/)
+    public string[] inventoryContent;
+    public string[] hotbarContent;
+
+    public PlayerData(float[] _playerStats, float[] _playerPositionAndRotation, string[] _inventoryContent, string[] _hotbarContent)
     {
         playerStats = _playerStats;
         playerPositionAndRotation = _playerPositionAndRotation;
-        //inventoryContent = _inventoryContent;
+        inventoryContent = _inventoryContent;
+        hotbarContent = _hotbarContent;
     }
 }

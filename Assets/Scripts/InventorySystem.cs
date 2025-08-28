@@ -28,6 +28,8 @@ public class InventorySystem : MonoBehaviour
     public TextMeshProUGUI pickupText;
     public Image pickupImage;
 
+    public List<string> itemsPickedUp;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -92,7 +94,8 @@ public class InventorySystem : MonoBehaviour
 
     public void AddToInventory(string itemName)
     {
-        SoundManager.instance.PlaySound(SoundManager.instance.pickupItemSound);
+        if(SaveManager.instance.isLoading == false)
+            SoundManager.instance.PlaySound(SoundManager.instance.pickupItemSound);
 
         whatSlotToEquip = FindNextEmptySlot();
 
